@@ -1,0 +1,22 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: mudracoin
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: mudracoin
+  template:
+    metadata:
+      labels:
+        app: mudracoin
+        version: v0.15
+    spec:
+      containers:
+      - name: mudracoin
+        image: toolboc/mudracoin
+        ports:
+        - containerPort: 9191
+          name: mudracoin
+          protocol: TCP
