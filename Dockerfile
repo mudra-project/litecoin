@@ -28,6 +28,21 @@ RUN ./configure
 RUN make
 RUN make install
 
+#Cross-compilation for Ubuntu and Windows Subsystem for Linux
+RUN sudo apt update
+RUN sudo apt upgrade
+RUN sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+RUN sudo apt install g++-mingw-w64-x86-64
+
+#Building for 64-bit Windows
+RUN PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
+RUN cd depends
+RUN make HOST=x86_64-w64-mingw32
+RUN cd ..
+RUN ./autogen.sh
+RUN CONFIG_SITE=$PWD/depends/x86_64-w64-mingw32/share/config.site ./configure --prefix=/
+RUN make
+
 #open service port
 EXPOSE 9191 19191
 
