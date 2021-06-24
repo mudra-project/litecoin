@@ -29,10 +29,10 @@ RUN make
 RUN make install
 
 #Cross-compilation for Ubuntu and Windows Subsystem for Linux
-RUN sudo apt update
-RUN sudo apt upgrade
-RUN sudo apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
-RUN sudo apt install g++-mingw-w64-x86-64
+RUN apt update
+RUN apt upgrade
+RUN apt install build-essential libtool autotools-dev automake pkg-config bsdmainutils curl git
+RUN apt install g++-mingw-w64-x86-64
 
 #Building for 64-bit Windows
 RUN PATH=$(echo "$PATH" | sed -e 's/:\/mnt.*//g') # strip out problematic Windows %PATH% imported var
